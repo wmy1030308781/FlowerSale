@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxx.mapper.FlowerDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.xxx.bean.BusCar" >
+    <id column="flowernumber" property="flowernumber" jdbcType="VARCHAR" />
+    <result column="flowertype" property="flowertype" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="Purchaseprice" property="Purchaseprice" jdbcType="DOUBLE" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="deposit" property="deposit" jdbcType="DOUBLE" />
+    <result column="issaleing" property="issaleing" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="flowerimg" property="flowerimg" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    flowernumber, flowertype, color, Purchaseprice, price, deposit, issaleing, description, flowerimg,
+    createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from flower_detail
+    where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from flower_detail
+    where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xxx.bean.BusCar" >
+    insert into flower_detail (flowernumber, flowertype, color,
+      Purchaseprice, price, deposit,
+      issaleing, description, flowerimg, 
+      createtime)
+    values (#{flowernumber,jdbcType=VARCHAR}, #{flowertype,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR},
+      #{Purchaseprice,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{deposit,jdbcType=DOUBLE},
+      #{issaleing,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{flowerimg,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxx.bean.BusCar" >
+    insert into flower_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flowernumber != null" >
+        flowernumber,
+      </if>
+      <if test="flowertype != null" >
+        flowertype,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="Purchaseprice != null" >
+        Purchaseprice,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="deposit != null" >
+        deposit,
+      </if>
+      <if test="issaleing != null" >
+        issaleing,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="flowerimg != null" >
+        flowerimg,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flowernumber != null" >
+        #{flowernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="flowertype != null" >
+        #{flowertype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="Purchaseprice != null" >
+        #{Purchaseprice,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="deposit != null" >
+        #{deposit,jdbcType=DOUBLE},
+      </if>
+      <if test="issaleing != null" >
+        #{issaleing,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowerimg != null" >
+        #{flowerimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxx.bean.BusCar" >
+    update flower_detail
+    <set >
+      <if test="flowertype != null" >
+        flowertype = #{flowertype,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="Purchaseprice != null" >
+        Purchaseprice = #{Purchaseprice,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="deposit != null" >
+        deposit = #{deposit,jdbcType=DOUBLE},
+      </if>
+      <if test="issaleing != null" >
+        issaleing = #{issaleing,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="flowerimg != null" >
+        flowerimg = #{flowerimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxx.bean.BusCar" >
+    update flower_detail
+    set flowertype = #{flowertype,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      Purchaseprice = #{Purchaseprice,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE},
+      deposit = #{deposit,jdbcType=DOUBLE},
+      issaleing = #{issaleing,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      flowerimg = #{flowerimg,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectParams" resultType="com.xxx.bean.BusCar" parameterType="FlowerDetailQuery">
+    select
+    *
+    from flower_detail as b
+    <where>
+      <if test="flowernumber!=null and flowernumber!=''">
+        and b.flowernumber like concat("%",#{flowernumber},"%")
+      </if>
+      <if test="flowertype!=null and flowertype!=''">
+        and b.flowertype like concat("%",#{flowertype},"%")
+      </if>
+      <if test="color!=null and color!=''">
+        and b.color like concat("%",#{color},"%")
+      </if>
+      <if test="description!=null and description!=''">
+        and b.description like concat("%",#{description},"%")
+      </if>
+      <if test="issaleing!=null">
+        and b.issaleing=#{issaleing}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from flower_detail
+    <where>
+      flowernumber in
+      <if test="array !=null and array.length>0">
+        <foreach collection="array" open="(" close=")" separator="," item="flowernumber">
+          #{flowernumber}
+        </foreach>
+      </if>
+    </where>
+
+  </delete>
+  <select id="selectAllFlowers" resultType="java.util.Map">
+    select flowernumber
+    from flower_detail
+    where issaleing = 0
+  </select>
+
+  <!--获取汽车出租数据源-->
+  <select id="selectByParams" resultType="com.xxx.bean.BusCar">
+    select <include refid="Base_Column_List"></include>
+    from flower_detail
+    <where>
+      <if test="null != identity and identity != ''">
+        flowernumber in (SELECT DISTINCT flowernumber from sale_flower where identity = #{identity})
+      </if>
+    </where>
+  </select>
+
+  <update id="reset">
+    update flower_detail
+    set issaleing = 0
+    where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </update>
+  <update id="reset1">
+  update sale_flower
+  set saleflag=1
+  where flowernumber = #{flowernumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

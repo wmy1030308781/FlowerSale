@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxx.mapper.FlowerSaleMapper" >
+  <resultMap id="BaseResultMap" type="com.xxx.bean.BusRent" >
+    <id column="saleid" property="saleid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="begindate" property="begindate" jdbcType="TIMESTAMP" />
+    <result column="saledate" property="saledate" jdbcType="TIMESTAMP" />
+    <result column="saleflag" property="saleflag" jdbcType="INTEGER" />
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="flowernumber" property="flowernumber" jdbcType="VARCHAR" />
+    <result column="opername" property="opername" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    saleid, price, begindate, saledate, saleflag, identity, flowernumber, opername, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sale_flower
+    where saleid = #{saleid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sale_flower
+    where saleid = #{saleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xxx.bean.BusRent" >
+    insert into sale_flower (saleid, price, begindate, 
+      saledate, saleflag, identity, 
+      flowernumber, opername, createtime
+      )
+    values (#{saleid,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{begindate,jdbcType=TIMESTAMP}, 
+      #{saledate,jdbcType=TIMESTAMP}, #{saleflag,jdbcType=INTEGER}, #{identity,jdbcType=VARCHAR}, 
+      #{flowernumber,jdbcType=VARCHAR}, #{opername,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxx.bean.BusRent" >
+    insert into sale_flower
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="saleid != null" >
+        saleid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="begindate != null" >
+        begindate,
+      </if>
+      <if test="saledate != null" >
+        saledate,
+      </if>
+      <if test="saleflag != null" >
+        saleflag,
+      </if>
+      <if test="identity != null" >
+        identity,
+      </if>
+      <if test="flowernumber != null" >
+        flowernumber,
+      </if>
+      <if test="opername != null" >
+        opername,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="saleid != null" >
+        #{saleid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saledate != null" >
+        #{saledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleflag != null" >
+        #{saleflag,jdbcType=INTEGER},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="flowernumber != null" >
+        #{flowernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="opername != null" >
+        #{opername,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxx.bean.BusRent" >
+    update sale_flower
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="begindate != null" >
+        begindate = #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saledate != null" >
+        saledate = #{saledate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleflag != null" >
+        saleflag = #{saleflag,jdbcType=INTEGER},
+      </if>
+      <if test="identity != null" >
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="flowernumber != null" >
+        flowernumber = #{flowernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="opername != null" >
+        opername = #{opername,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where saleid = #{saleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxx.bean.BusRent" >
+    update sale_flower
+    set price = #{price,jdbcType=DOUBLE},
+      begindate = #{begindate,jdbcType=TIMESTAMP},
+      saledate = #{saledate,jdbcType=TIMESTAMP},
+      saleflag = #{saleflag,jdbcType=INTEGER},
+      identity = #{identity,jdbcType=VARCHAR},
+      flowernumber = #{flowernumber,jdbcType=VARCHAR},
+      opername = #{opername,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where saleid = #{saleid,jdbcType=VARCHAR}
+  </update>
+
+  <!--新增条件查询-->
+  <select id="selectParams" parameterType="BusRentQuery" resultType="BusRent">
+    select
+    *
+    from sale_flower
+    <where>
+      <if test="saleid!=null and saleid!=''">
+        and saleid like concat("%",#{saleid},"%")
+      </if>
+      <if test="identity!=null and identity!=''">
+        and identity=#{identity}
+      </if>
+      <if test="flowernumber!=null and flowernumber!=''">
+        and flowernumber=#{flowernumber}
+      </if>
+      <if test="begindate!=null and begindate!=''">
+        and begindate=#{begindate}
+      </if>
+      <if test="saledate!=null and saledate!=''">
+        and saledate=#{saledate}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteBatch" parameterType="string">
+    delete from sale_flower
+     where saleid
+     in (
+    <foreach item="saleid" collection="array"  separator=",">
+      #{saleid,jdbcType=VARCHAR}
+    </foreach>
+    )
+  </delete>
+
+
+<!--  更新flower_detail表Isrenting字段-->
+  <update id="updateFlowerIssaleing">
+    update flower_detail
+    set
+   issaleing=1
+    where
+    flowernumber=#{flowernumber}
+  </update>
+
+<!--  查询车租-->
+  <select id="selectprice" resultType="Double">
+      select price
+      from flower_detail
+      where
+      flowernumber=#{flowernumber}
+    </select>
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxx.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.xxx.bean.Role" >
+    <id column="roleid" property="roleid" jdbcType="INTEGER" />
+    <result column="rolename" property="rolename" jdbcType="VARCHAR" />
+    <result column="roledesc" property="roledesc" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="INTEGER" />
+    <result column="creatTime" property="creattime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    roleid, rolename, roledesc, available, creatTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.xxx.bean.Role" >
+    insert into sys_role (roleid, rolename, roledesc, 
+      available, creatTime, updateTime
+      )
+    values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}, 
+      #{available,jdbcType=INTEGER}, #{creattime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxx.bean.Role" >
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="rolename != null" >
+        rolename,
+      </if>
+      <if test="roledesc != null" >
+        roledesc,
+      </if>
+      <if test="available != null" >
+        available,
+      </if>
+      <if test="creattime != null" >
+        creatTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null" >
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null" >
+        #{creattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxx.bean.Role" >
+    update sys_role
+    <set >
+      <if test="rolename != null" >
+        rolename = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null" >
+        roledesc = #{roledesc,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null" >
+        creatTime = #{creattime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxx.bean.Role" >
+    update sys_role
+    set rolename = #{rolename,jdbcType=VARCHAR},
+      roledesc = #{roledesc,jdbcType=VARCHAR},
+      available = #{available,jdbcType=INTEGER},
+      creatTime = #{creattime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getRoleList" parameterType="roleQuery" resultType="com.xxx.bean.Role">
+    select <include refid="Base_Column_List"/> from sys_role
+    <where>
+      available=1
+      <if test="rolename != null and rolename!='' ">
+        and rolename=#{rolename}
+      </if>
+      <if test=" roledesc !=null and roledesc!=''">
+        and roledesc=#{roledesc}
+      </if>
+    </where>
+  </select>
+
+  <select id="getRoleByName" resultType="com.xxx.bean.Role">
+    select <include refid="Base_Column_List"/> from sys_role where rolename=#{roleName}
+  </select>
+
+  <select id="getSelectList" resultType="java.util.Map">
+SELECT
+	sr1.roleid,
+	sr1.rolename,
+	CASE
+	WHEN IFNULL(temp.roleid,0)=0 THEN ""
+	ELSE
+		"selected"
+END AS "selected"
+FROM
+	sys_role sr1
+	LEFT JOIN (
+	SELECT
+		sr.roleid
+	FROM
+		sys_role sr
+		LEFT JOIN sys_role_user ru ON sr.roleid = ru.rid
+	WHERE
+		ru.uid = #{userId}
+	) AS temp ON sr1.roleid = temp.roleid WHERE sr1.available=1
+  </select>
+
+  <update id="deleteRoleById">
+    update sys_role set available=0 where roleid=#{roleId}
+  </update>
+</mapper>
